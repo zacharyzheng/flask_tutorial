@@ -63,6 +63,16 @@ def register():
        return redirect(url_for('login'))
    return render_template('register.html', title='register', form=form)
 
+@app.route('/user/<username>')
+@login_required
+def user(username):
+    user = User.query.filter_by(username=username).first_or_404()
+    posts = [
+        {'author':user, 'body':'test 1'},
+        {'author':user, 'body':'test 2'}
+    ]
+
+    return render_template('user.html', user=user, posts=posts)
 
 
 
